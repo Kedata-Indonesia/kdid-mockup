@@ -21,14 +21,16 @@ export const useOrdersStore = defineStore('orders', {
       eventDate?: string
       location?: string
     }) {
+      const now = new Date()
       const newOrder: Order = {
-        id: `ORD-${Math.floor(Math.random() * 100000)}`,
-        date: new Date().toISOString().split('T')[0],
+        id: `${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+        date: now.toISOString().split('T')[0],
+        createdAt: now.toISOString(),
         total: orderData.total,
-        status: 'Paid',
+        status: 'confirmed',
         items: [...orderData.items],
-        eventDate: orderData.eventDate,
-        location: orderData.location,
+        eventDate: orderData.eventDate || now.toISOString().split('T')[0],
+        location: orderData.location || 'To be confirmed',
       }
 
       this.orders.unshift(newOrder)

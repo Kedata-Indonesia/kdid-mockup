@@ -131,7 +131,13 @@ const currentUser = computed(() => authStore.user || { name: 'Guest', email: 'gu
                     <div class="text-gray-400 uppercase text-[10px] font-bold tracking-widest mb-1">
                       Status
                     </div>
-                    <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-[10px] font-bold">
+                    <span :class="[
+                      'px-2 py-0.5 rounded-full text-[10px] font-bold capitalize',
+                      order.status === 'completed' ? 'bg-green-100 text-green-700' :
+                      order.status === 'processing' ? 'bg-blue-100 text-blue-700' :
+                      order.status === 'confirmed' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-gray-100 text-gray-700'
+                    ]">
                       {{ order.status }}
                     </span>
                   </div>
@@ -189,10 +195,13 @@ const currentUser = computed(() => authStore.user || { name: 'Guest', email: 'gu
                     <Download class="w-4 h-4" />
                     <span>Download Invoice</span>
                   </button>
-                  <button class="flex items-center space-x-2 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 px-6 py-2 rounded-xl transition-colors">
+                  <NuxtLink
+                    :to="`/order/${order.id}`"
+                    class="flex items-center space-x-2 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 px-6 py-2 rounded-xl transition-colors"
+                  >
                     <ExternalLink class="w-4 h-4" />
-                    <span>Track Planning</span>
-                  </button>
+                    <span>View Details</span>
+                  </NuxtLink>
                 </div>
               </div>
             </div>

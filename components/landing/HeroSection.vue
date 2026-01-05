@@ -41,31 +41,29 @@ const handleSearch = () => {
         </p>
 
         <!-- Search Form -->
-        <form @submit.prevent="handleSearch" class="bg-white p-2 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-2 max-w-3xl">
-          <div class="flex-1 flex items-center px-4 py-3 border-r border-gray-100">
-            <Search class="text-gray-400 w-5 h-5 mr-3 flex-shrink-0" />
+        <form @submit.prevent="handleSearch" class="max-w-3xl">
+          <div class="backdrop-blur-xl bg-white/10 p-3 pl-6 rounded-full shadow-2xl shadow-black/20 flex items-center gap-1 border border-white/20">
+            <Search class="text-white/70 w-5 h-5 flex-shrink-0" />
             <input
               v-model="searchQuery"
               type="text"
               placeholder="What are you looking for?"
-              class="bg-transparent text-gray-900 focus:outline-none w-full"
+              class="bg-transparent border-none text-white placeholder-white/50 focus:outline-none focus:ring-0 flex-1 min-w-0 px-3 py-2"
             />
-          </div>
-          <div class="flex-1 flex items-center px-4 py-3 border-r border-gray-100">
-            <MapPin class="text-gray-400 w-5 h-5 mr-3 flex-shrink-0" />
+            <MapPin class="text-white/70 w-5 h-5 flex-shrink-0 ml-2" />
             <input
               v-model="locationQuery"
               type="text"
-              placeholder="Location (e.g. Surakarta)"
-              class="bg-transparent text-gray-900 focus:outline-none w-full"
+              placeholder="Location"
+              class="bg-transparent border-none text-white placeholder-white/50 focus:outline-none focus:ring-0 flex-1 min-w-0 px-3 py-2"
             />
+            <button
+              type="submit"
+              class="bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 px-8 rounded-full transition-all ml-2"
+            >
+              Search
+            </button>
           </div>
-          <button
-            type="submit"
-            class="bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg hover:shadow-primary-500/20"
-          >
-            Search
-          </button>
         </form>
       </div>
     </div>

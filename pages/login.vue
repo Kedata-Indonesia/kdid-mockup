@@ -63,9 +63,9 @@ const handleLogin = async () => {
         <div class="space-y-2">
           <div class="flex justify-between items-center ml-1">
             <label class="text-sm font-bold text-gray-500">Password</label>
-            <button type="button" class="text-xs text-primary-600 font-bold hover:underline">
+            <NuxtLink to="/forgot-password" class="text-xs text-primary-600 font-bold hover:underline">
               Forgot?
-            </button>
+            </NuxtLink>
           </div>
           <div class="relative">
             <Lock class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />

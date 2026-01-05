@@ -40,8 +40,9 @@ export interface User {
 export interface Order {
   id: string
   date: string
+  createdAt: string
   total: number
-  status: 'Pending' | 'Paid' | 'In Progress' | 'Completed' | 'Cancelled'
+  status: 'pending' | 'confirmed' | 'processing' | 'completed' | 'cancelled'
   items: CartItem[]
   eventDate?: string
   location?: string

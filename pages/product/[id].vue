@@ -7,11 +7,14 @@ import {
   Share2,
   Heart,
   ChevronLeft,
+  ChevronRight,
   Plus,
   Minus,
   Check,
   Calendar,
-  ArrowRight
+  ArrowRight,
+  X,
+  ZoomIn
 } from 'lucide-vue-next'
 
 const route = useRoute()
@@ -24,6 +27,7 @@ const product = computed(() => getProductById(route.params.id as string))
 const quantity = ref(1)
 const activeImage = ref(0)
 const isAdded = ref(false)
+const showLightbox = ref(false)
 
 const handleAddToCart = () => {
   if (!product.value) return
@@ -35,6 +39,39 @@ const handleAddToCart = () => {
     isAdded.value = false
   }, 2000)
 }
+
+const openLightbox = (index: number) => {
+  activeImage.value = index
+  showLightbox.value = true
+  document.body.style.overflow = 'hidden'
+}
+
+const closeLightbox = () => {
+  showLightbox.value = false
+  document.body.style.overflow = ''
+}
+
+const nextImage = () => {
+  if (!product.value) return
+  activeImage.value = (activeImage.value + 1) % product.value.images.length
+}
+
+const prevImage = () => {
+  if (!product.value) return
+  activeImage.value = (activeImage.value - 1 + product.value.images.length) % product.value.images.length
+}
+
+// Handle keyboard navigation
+onMounted(() => {
+  const handleKeydown = (e: KeyboardEvent) => {
+    if (!showLightbox.value) return
+    if (e.key === 'Escape') closeLightbox()
+    if (e.key === 'ArrowRight') nextImage()
+    if (e.key === 'ArrowLeft') prevImage()
+  }
+  window.addEventListener('keydown', handleKeydown)
+  onUnmounted(() => window.removeEventListener('keydown', handleKeydown))
+})
 
 useHead({
   title: computed(() => product.value ? `${product.value.name} - EverAfter` : 'Product - EverAfter')
@@ -54,12 +91,20 @@ useHead({
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <!-- Gallery -->
       <div class="space-y-4">
-        <div class="aspect-[4/3] rounded-5xl overflow-hidden bg-gray-100 shadow-lg">
+        <div
+          @click="openLightbox(activeImage)"
+          class="aspect-[4/3] rounded-5xl overflow-hidden bg-gray-100 shadow-lg relative cursor-zoom-in group"
+        >
           <img
             :src="product.images[activeImage]"
             :alt="product.name"
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
+          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+            <div class="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+              <ZoomIn class="w-6 h-6 text-gray-700" />
+            </div>
+          </div>
         </div>
         <div class="flex space-x-4">
           <button
@@ -268,6 +313,76 @@ useHead({
         </NuxtLink>
       </div>
     </div>
+
+    <!-- Lightbox Modal -->
+    <Teleport to="body">
+      <Transition name="fade">
+        <div
+          v-if="showLightbox"
+          class="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+          @click.self="closeLightbox"
+        >
+          <!-- Close Button -->
+          <button
+            @click="closeLightbox"
+            class="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-10"
+          >
+            <X class="w-6 h-6" />
+          </button>
+
+          <!-- Navigation Buttons -->
+          <button
+            v-if="product.images.length > 1"
+            @click="prevImage"
+            class="absolute left-6 w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+          >
+            <ChevronLeft class="w-8 h-8" />
+          </button>
+
+          <button
+            v-if="product.images.length > 1"
+            @click="nextImage"
+            class="absolute right-6 w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+          >
+            <ChevronRight class="w-8 h-8" />
+          </button>
+
+          <!-- Image -->
+          <div class="max-w-5xl max-h-[85vh] px-4">
+            <img
+              :src="product.images[activeImage]"
+              :alt="product.name"
+              class="max-w-full max-h-[85vh] object-contain rounded-2xl"
+            />
+          </div>
+
+          <!-- Thumbnails -->
+          <div
+            v-if="product.images.length > 1"
+            class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3"
+          >
+            <button
+              v-for="(img, i) in product.images"
+              :key="i"
+              @click="activeImage = i"
+              :class="[
+                'w-16 h-16 rounded-xl overflow-hidden border-2 transition-all',
+                activeImage === i
+                  ? 'border-white scale-110'
+                  : 'border-white/30 opacity-60 hover:opacity-100'
+              ]"
+            >
+              <img :src="img" class="w-full h-full object-cover" alt="" />
+            </button>
+          </div>
+
+          <!-- Counter -->
+          <div class="absolute top-6 left-6 text-white/80 text-sm font-medium">
+            {{ activeImage + 1 }} / {{ product.images.length }}
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </div>
 
   <!-- Not Found -->
@@ -278,3 +393,15 @@ useHead({
     </NuxtLink>
   </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

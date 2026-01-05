@@ -7,6 +7,7 @@ useHead({
 <template>
   <div class="space-y-24 pb-20">
     <LandingHeroSection />
+    <LandingPromoBanner />
     <LandingAiConsultant />
     <LandingCategoryGrid />
     <LandingFeaturedPackages />

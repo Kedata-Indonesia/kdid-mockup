@@ -111,19 +111,19 @@ const currentUser = computed(() => authStore.user || { name: 'Guest', email: 'gu
               class="bg-white rounded-4xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
             >
               <!-- Header -->
-              <div class="bg-gray-50 px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-gray-100">
-                <div class="flex space-x-8 text-sm">
+              <div class="bg-gray-50 px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-100">
+                <div class="grid grid-cols-3 gap-4 sm:flex sm:space-x-8 text-sm w-full sm:w-auto">
                   <div>
                     <div class="text-gray-400 uppercase text-[10px] font-bold tracking-widest mb-1">
                       Order Placed
                     </div>
-                    <div class="font-bold text-gray-700">{{ order.date }}</div>
+                    <div class="font-bold text-gray-700 text-xs sm:text-sm">{{ order.date }}</div>
                   </div>
                   <div>
                     <div class="text-gray-400 uppercase text-[10px] font-bold tracking-widest mb-1">
-                      Total Amount
+                      Total
                     </div>
-                    <div class="font-bold text-gray-900">
+                    <div class="font-bold text-gray-900 text-xs sm:text-sm">
                       IDR {{ formatCurrency(order.total) }}
                     </div>
                   </div>
@@ -132,7 +132,7 @@ const currentUser = computed(() => authStore.user || { name: 'Guest', email: 'gu
                       Status
                     </div>
                     <span :class="[
-                      'px-2 py-0.5 rounded-full text-[10px] font-bold capitalize',
+                      'px-2 py-0.5 rounded-full text-[10px] font-bold capitalize inline-block',
                       order.status === 'completed' ? 'bg-green-100 text-green-700' :
                       order.status === 'processing' ? 'bg-blue-100 text-blue-700' :
                       order.status === 'confirmed' ? 'bg-yellow-100 text-yellow-700' :
@@ -146,8 +146,8 @@ const currentUser = computed(() => authStore.user || { name: 'Guest', email: 'gu
               </div>
 
               <!-- Content -->
-              <div class="p-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div class="p-4 sm:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 mb-6 sm:mb-8">
                   <div class="flex items-start space-x-4">
                     <div class="w-10 h-10 bg-gold-50 rounded-full flex items-center justify-center text-gold-600 flex-shrink-0">
                       <Calendar class="w-5 h-5" />
@@ -190,14 +190,14 @@ const currentUser = computed(() => authStore.user || { name: 'Guest', email: 'gu
                 </div>
 
                 <!-- Actions -->
-                <div class="mt-8 flex justify-end space-x-4">
-                  <button class="flex items-center space-x-2 text-sm font-bold text-gray-500 hover:text-gray-900 bg-gray-100 px-4 py-2 rounded-xl transition-colors">
+                <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:justify-end gap-3 sm:space-x-4">
+                  <button class="flex items-center justify-center space-x-2 text-sm font-bold text-gray-500 hover:text-gray-900 bg-gray-100 px-4 py-2 rounded-xl transition-colors">
                     <Download class="w-4 h-4" />
                     <span>Download Invoice</span>
                   </button>
                   <NuxtLink
                     :to="`/order/${order.id}`"
-                    class="flex items-center space-x-2 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 px-6 py-2 rounded-xl transition-colors"
+                    class="flex items-center justify-center space-x-2 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 px-6 py-2 rounded-xl transition-colors"
                   >
                     <ExternalLink class="w-4 h-4" />
                     <span>View Details</span>

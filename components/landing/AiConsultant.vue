@@ -46,25 +46,44 @@ const handleSubmit = async () => {
           Describe your dream wedding—style, guest count, or budget—and our AI assistant will suggest the perfect vendor combinations.
         </p>
 
-        <form @submit.prevent="handleSubmit" class="relative mb-8">
-          <textarea
-            v-model="prompt"
-            placeholder="E.g., I want an intimate rustic garden wedding for 50 people in Surakarta with a budget of 30 million..."
-            class="w-full bg-white/80 backdrop-blur rounded-2xl p-6 border border-gold-200 focus:ring-2 focus:ring-primary-400 focus:outline-none text-gray-800 min-h-[120px] shadow-inner resize-none"
-          />
-          <button
-            type="submit"
-            :disabled="isLoading"
-            class="absolute bottom-4 right-4 bg-gray-900 text-white font-bold py-2 px-6 rounded-lg flex items-center space-x-2 hover:bg-gray-800 transition-colors disabled:opacity-50"
-          >
-            <template v-if="isLoading">
-              <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            </template>
-            <template v-else>
-              <span>Get Advice</span>
-              <ArrowRight class="w-4 h-4" />
-            </template>
-          </button>
+        <form @submit.prevent="handleSubmit" class="mb-8">
+          <div class="relative">
+            <textarea
+              v-model="prompt"
+              placeholder="E.g., I want an intimate rustic garden wedding for 50 people in Surakarta with a budget of 30 million..."
+              class="w-full bg-white/80 backdrop-blur rounded-2xl p-4 sm:p-6 pb-4 sm:pb-14 border border-gold-200 focus:ring-2 focus:ring-primary-400 focus:outline-none text-gray-800 min-h-[120px] shadow-inner resize-none"
+            />
+            <!-- Desktop: Button inside textarea -->
+            <button
+              type="submit"
+              :disabled="isLoading"
+              class="hidden sm:flex absolute bottom-4 right-4 bg-gray-900 text-white font-bold py-2 px-6 rounded-lg items-center space-x-2 hover:bg-gray-800 transition-colors disabled:opacity-50"
+            >
+              <template v-if="isLoading">
+                <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              </template>
+              <template v-else>
+                <span>Get Advice</span>
+                <ArrowRight class="w-4 h-4" />
+              </template>
+            </button>
+          </div>
+          <!-- Mobile: Button below textarea -->
+          <div class="sm:hidden flex justify-end mt-3">
+            <button
+              type="submit"
+              :disabled="isLoading"
+              class="bg-gray-900 text-white font-bold py-3 px-6 rounded-xl flex items-center space-x-2 hover:bg-gray-800 transition-colors disabled:opacity-50"
+            >
+              <template v-if="isLoading">
+                <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              </template>
+              <template v-else>
+                <span>Get Advice</span>
+                <ArrowRight class="w-4 h-4" />
+              </template>
+            </button>
+          </div>
         </form>
 
         <!-- AI Response -->

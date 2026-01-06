@@ -72,14 +72,15 @@ const formatDateTime = (dateStr: string) => {
       >
         <ChevronLeft class="w-5 h-5 mr-1" /> Back
       </button>
-      <button class="flex items-center gap-2 text-primary-600 font-bold hover:underline">
-        <Download class="w-5 h-5" />
-        Download Invoice
+      <button class="flex items-center gap-2 text-primary-600 font-bold hover:underline text-sm sm:text-base">
+        <Download class="w-4 h-4 sm:w-5 sm:h-5" />
+        <span class="hidden sm:inline">Download Invoice</span>
+        <span class="sm:hidden">Invoice</span>
       </button>
     </div>
 
     <!-- Order Info Card -->
-    <div class="bg-white rounded-4xl border border-gray-100 p-8 mb-8">
+    <div class="bg-white rounded-4xl border border-gray-100 p-4 sm:p-8 mb-8">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
           <div class="text-sm text-gray-500 mb-1">Order ID</div>
@@ -127,7 +128,7 @@ const formatDateTime = (dateStr: string) => {
     </div>
 
     <!-- Order Tracking -->
-    <div class="bg-white rounded-4xl border border-gray-100 p-8 mb-8">
+    <div class="bg-white rounded-4xl border border-gray-100 p-4 sm:p-8 mb-8">
       <h2 class="text-xl font-bold mb-8">Order Tracking</h2>
 
       <div class="relative">
@@ -178,7 +179,7 @@ const formatDateTime = (dateStr: string) => {
     </div>
 
     <!-- Order Items -->
-    <div class="bg-white rounded-4xl border border-gray-100 p-8 mb-8">
+    <div class="bg-white rounded-4xl border border-gray-100 p-4 sm:p-8 mb-8">
       <h2 class="text-xl font-bold mb-6">Booked Services</h2>
 
       <div class="space-y-4">
@@ -226,7 +227,7 @@ const formatDateTime = (dateStr: string) => {
     </div>
 
     <!-- Need Help -->
-    <div class="bg-gray-50 rounded-4xl p-8">
+    <div class="bg-gray-50 rounded-4xl p-4 sm:p-8">
       <h2 class="text-xl font-bold mb-4">Need Help?</h2>
       <p class="text-gray-500 mb-6">
         Our customer service team is ready to assist you with any questions about your order.

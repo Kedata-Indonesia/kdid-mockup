@@ -51,25 +51,25 @@ onMounted(() => {
           </div>
 
           <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-6">
-              <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                <component :is="promo.icon" class="w-8 h-8" />
+            <div class="flex items-center gap-4 sm:gap-6 text-center md:text-left">
+              <div class="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center flex-shrink-0">
+                <component :is="promo.icon" class="w-6 h-6 sm:w-8 sm:h-8" />
               </div>
               <div>
-                <div class="text-white/80 text-sm font-medium mb-1">{{ promo.subtitle }}</div>
-                <h3 class="text-2xl md:text-3xl font-bold font-serif">{{ promo.title }}</h3>
-                <p class="text-white/80 mt-1">{{ promo.description }}</p>
+                <div class="text-white/80 text-xs sm:text-sm font-medium mb-1">{{ promo.subtitle }}</div>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold font-serif">{{ promo.title }}</h3>
+                <p class="text-white/80 mt-1 text-sm sm:text-base">{{ promo.description }}</p>
               </div>
             </div>
 
-            <div class="flex items-center gap-6">
+            <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full md:w-auto">
               <div class="text-center">
-                <div class="text-4xl md:text-5xl font-bold">{{ promo.discount }}</div>
-                <div class="text-white/80 text-sm">on selected items</div>
+                <div class="text-3xl sm:text-4xl md:text-5xl font-bold">{{ promo.discount }}</div>
+                <div class="text-white/80 text-xs sm:text-sm">on selected items</div>
               </div>
               <NuxtLink
                 to="/browse"
-                class="bg-white text-gray-900 font-bold py-4 px-8 rounded-2xl hover:bg-gray-100 transition-all flex items-center shadow-xl"
+                class="bg-white text-gray-900 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl hover:bg-gray-100 transition-all flex items-center shadow-xl w-full sm:w-auto justify-center"
               >
                 Shop Now <ArrowRight class="w-5 h-5 ml-2" />
               </NuxtLink>

@@ -42,7 +42,36 @@ const handleSearch = () => {
 
         <!-- Search Form -->
         <form @submit.prevent="handleSearch" class="max-w-3xl">
-          <div class="backdrop-blur-xl bg-white/10 p-3 pl-6 rounded-full shadow-2xl shadow-black/20 flex items-center gap-1 border border-white/20">
+          <!-- Mobile: Stacked layout -->
+          <div class="md:hidden backdrop-blur-xl bg-white/10 p-4 rounded-3xl shadow-2xl shadow-black/20 border border-white/20 space-y-3">
+            <div class="flex items-center gap-3">
+              <Search class="text-white/70 w-5 h-5 flex-shrink-0" />
+              <input
+                v-model="searchQuery"
+                type="text"
+                placeholder="What are you looking for?"
+                class="bg-transparent border-none text-white placeholder-white/50 focus:outline-none focus:ring-0 flex-1 min-w-0 py-2"
+              />
+            </div>
+            <div class="flex items-center gap-3">
+              <MapPin class="text-white/70 w-5 h-5 flex-shrink-0" />
+              <input
+                v-model="locationQuery"
+                type="text"
+                placeholder="Location"
+                class="bg-transparent border-none text-white placeholder-white/50 focus:outline-none focus:ring-0 flex-1 min-w-0 py-2"
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 px-8 rounded-full transition-all"
+            >
+              Search
+            </button>
+          </div>
+
+          <!-- Desktop: Horizontal layout -->
+          <div class="hidden md:flex backdrop-blur-xl bg-white/10 p-3 pl-6 rounded-full shadow-2xl shadow-black/20 items-center gap-1 border border-white/20">
             <Search class="text-white/70 w-5 h-5 flex-shrink-0" />
             <input
               v-model="searchQuery"

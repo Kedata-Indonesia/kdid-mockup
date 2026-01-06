@@ -4,11 +4,30 @@ import { CategoryType } from '~/types'
 
 const { products, formatCurrency } = useProducts()
 const featuredProducts = computed(() => products.slice(0, 3))
+
+const sectionRef = ref<HTMLElement | null>(null)
+const isVisible = ref(false)
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        isVisible.value = true
+        observer.disconnect()
+      }
+    },
+    { threshold: 0.15 }
+  )
+
+  if (sectionRef.value) {
+    observer.observe(sectionRef.value)
+  }
+})
 </script>
 
 <template>
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white py-16 rounded-6xl">
-    <div class="flex justify-between items-end mb-12">
+  <section ref="sectionRef" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white py-16 rounded-6xl">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-4">
       <div>
         <h2 class="text-4xl font-bold mb-4">Featured Packages</h2>
         <p class="text-gray-500">Top-rated services curated by our experts</p>
@@ -23,9 +42,13 @@ const featuredProducts = computed(() => products.slice(0, 3))
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div
-        v-for="product in featuredProducts"
+        v-for="(product, index) in featuredProducts"
         :key="product.id"
-        class="group bg-white rounded-3xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300"
+        :class="[
+          'group bg-white rounded-3xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500',
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        ]"
+        :style="{ transitionDelay: isVisible ? `${index * 150}ms` : '0ms' }"
       >
         <!-- Image -->
         <div class="relative h-64 overflow-hidden">

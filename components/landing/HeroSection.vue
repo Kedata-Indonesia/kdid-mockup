@@ -5,6 +5,7 @@ const router = useRouter()
 
 const searchQuery = ref('')
 const locationQuery = ref('')
+const scrollY = ref(0)
 
 const handleSearch = () => {
   router.push({
@@ -15,15 +16,33 @@ const handleSearch = () => {
     }
   })
 }
+
+const handleScroll = () => {
+  scrollY.value = window.scrollY
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
+// Parallax transform - background moves at 0.4x speed
+const parallaxStyle = computed(() => ({
+  transform: `translateY(${scrollY.value * 0.4}px) scale(1.1)`
+}))
 </script>
 
 <template>
   <section class="relative h-[85vh] flex items-center overflow-hidden">
-    <!-- Background -->
-    <div class="absolute inset-0 z-0">
+    <!-- Parallax Background -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
       <img
         src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2000"
-        class="w-full h-full object-cover"
+        class="w-full h-[120%] object-cover will-change-transform"
+        :style="parallaxStyle"
         alt="Wedding Hero"
       />
       <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />

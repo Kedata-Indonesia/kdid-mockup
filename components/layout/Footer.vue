@@ -12,36 +12,36 @@ const socialLinks = [
 <template>
   <footer class="bg-gray-900 text-white pt-20 pb-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-16">
         <!-- Brand -->
-        <div class="col-span-1 md:col-span-2">
-          <div class="flex items-center space-x-2 mb-6">
-            <Heart class="text-primary-500 w-8 h-8 fill-current" />
-            <span class="text-3xl font-bold font-serif tracking-tight">EverAfter</span>
+        <div class="col-span-2">
+          <div class="flex items-center space-x-2 mb-4 md:mb-6">
+            <Heart class="text-primary-500 w-6 h-6 md:w-8 md:h-8 fill-current" />
+            <span class="text-2xl md:text-3xl font-bold font-serif tracking-tight">EverAfter</span>
           </div>
-          <p class="text-gray-400 max-w-sm mb-8">
+          <p class="text-gray-400 max-w-sm mb-6 md:mb-8 text-sm md:text-base">
             The premium marketplace for your dream wedding. We connect you with the finest vendors to make your special day truly unforgettable.
           </p>
-          <div class="flex space-x-4">
+          <div class="flex space-x-3 md:space-x-4">
             <a
               v-for="social in socialLinks"
               :key="social.label"
               :href="social.href"
               :aria-label="social.label"
               :class="[
-                'w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center transition-colors cursor-pointer',
+                'w-9 h-9 md:w-10 md:h-10 rounded-full bg-gray-800 flex items-center justify-center transition-colors cursor-pointer',
                 social.hoverClass
               ]"
             >
-              <component :is="social.icon" class="w-5 h-5" />
+              <component :is="social.icon" class="w-4 h-4 md:w-5 md:h-5" />
             </a>
           </div>
         </div>
 
         <!-- Quick Links -->
         <div>
-          <h4 class="text-lg font-bold mb-6">Quick Links</h4>
-          <ul class="space-y-4 text-gray-400">
+          <h4 class="text-base md:text-lg font-bold mb-4 md:mb-6">Quick Links</h4>
+          <ul class="space-y-2 md:space-y-4 text-gray-400 text-sm md:text-base">
             <li>
               <NuxtLink to="/browse?category=Venue" class="hover:text-primary-400 transition-colors">
                 Find Venues
@@ -49,12 +49,12 @@ const socialLinks = [
             </li>
             <li>
               <NuxtLink to="/browse?category=Catering" class="hover:text-primary-400 transition-colors">
-                Catering Services
+                Catering
               </NuxtLink>
             </li>
             <li>
               <NuxtLink to="/browse?category=Decoration" class="hover:text-primary-400 transition-colors">
-                Wedding Decor
+                Decoration
               </NuxtLink>
             </li>
             <li>
@@ -67,16 +67,16 @@ const socialLinks = [
 
         <!-- Support -->
         <div>
-          <h4 class="text-lg font-bold mb-6">Support</h4>
-          <ul class="space-y-4 text-gray-400">
+          <h4 class="text-base md:text-lg font-bold mb-4 md:mb-6">Support</h4>
+          <ul class="space-y-2 md:space-y-4 text-gray-400 text-sm md:text-base">
             <li>
               <a href="#" class="hover:text-primary-400 transition-colors">Help Center</a>
             </li>
             <li>
-              <a href="#" class="hover:text-primary-400 transition-colors">Terms of Service</a>
+              <a href="#" class="hover:text-primary-400 transition-colors">Terms</a>
             </li>
             <li>
-              <a href="#" class="hover:text-primary-400 transition-colors">Privacy Policy</a>
+              <a href="#" class="hover:text-primary-400 transition-colors">Privacy</a>
             </li>
             <li>
               <a href="#" class="hover:text-primary-400 transition-colors">Contact Us</a>

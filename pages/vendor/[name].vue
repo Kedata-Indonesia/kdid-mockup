@@ -89,6 +89,16 @@ const changeMonth = (offset: number) => {
   currentDate.value = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth() + offset, 1)
 }
 
+// Smart back navigation
+const goBack = () => {
+  // Check if we have history and came from within the app
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.push('/browse')
+  }
+}
+
 // Scroll detection
 onMounted(() => {
   const handleScroll = () => {
@@ -150,13 +160,14 @@ const tabs = [
 </script>
 
 <template>
-  <!-- Not Found -->
-  <div v-if="!vendorInfo" class="max-w-7xl mx-auto px-4 py-20 text-center">
-    <h2 class="text-3xl font-bold mb-4">Vendor not found</h2>
-    <NuxtLink to="/browse" class="text-primary-600 hover:underline">Return to browse</NuxtLink>
-  </div>
+  <div>
+    <!-- Not Found -->
+    <div v-if="!vendorInfo" class="max-w-7xl mx-auto px-4 py-20 text-center">
+      <h2 class="text-3xl font-bold mb-4">Vendor not found</h2>
+      <NuxtLink to="/browse" class="text-primary-600 hover:underline">Return to browse</NuxtLink>
+    </div>
 
-  <div v-else class="pb-20 relative">
+    <div v-else class="pb-20 relative">
     <!-- Cover / Header -->
     <div class="relative h-96 w-full">
       <img
@@ -169,7 +180,7 @@ const tabs = [
       <!-- Back Button -->
       <div class="absolute top-8 left-8">
         <button
-          @click="router.back()"
+          @click="goBack"
           class="flex items-center text-white bg-white/20 backdrop-blur-md px-4 py-2 rounded-full hover:bg-white/30 transition-all font-medium"
         >
           <ChevronLeft class="w-5 h-5 mr-1" /> Back
@@ -609,5 +620,6 @@ const tabs = [
         </button>
       </div>
     </Transition>
+    </div>
   </div>
 </template>

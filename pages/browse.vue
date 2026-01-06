@@ -50,10 +50,29 @@ const clearFilters = () => {
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <!-- Mobile: Horizontal Category Pills -->
+    <div class="md:hidden -mx-4 px-4 mb-6 overflow-x-auto scrollbar-hide">
+      <div class="flex gap-2 pb-2" style="width: max-content;">
+        <button
+          v-for="cat in categories"
+          :key="cat"
+          @click="selectedCategory = cat"
+          :class="[
+            'py-2 px-4 rounded-full text-sm font-semibold whitespace-nowrap transition-all',
+            selectedCategory === cat
+              ? 'bg-primary-600 text-white'
+              : 'bg-white border border-gray-200 text-gray-600'
+          ]"
+        >
+          {{ cat }}
+        </button>
+      </div>
+    </div>
+
     <div class="flex flex-col md:flex-row gap-8">
-      <!-- Filters Sidebar -->
-      <aside class="w-full md:w-64 space-y-8">
+      <!-- Filters Sidebar (Desktop only) -->
+      <aside class="hidden md:block w-64 space-y-8">
         <div>
           <h3 class="text-lg font-bold mb-4 flex items-center">
             <Filter class="w-5 h-5 mr-2" /> Filters
@@ -225,3 +244,13 @@ const clearFilters = () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+</style>

@@ -61,6 +61,15 @@ const prevImage = () => {
   activeImage.value = (activeImage.value - 1 + product.value.images.length) % product.value.images.length
 }
 
+// Smart back navigation
+const goBack = () => {
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.push('/browse')
+  }
+}
+
 // Handle keyboard navigation
 onMounted(() => {
   const handleKeydown = (e: KeyboardEvent) => {
@@ -79,13 +88,14 @@ useHead({
 </script>
 
 <template>
-  <div v-if="product" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div>
+    <div v-if="product" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Back Button -->
     <button
-      @click="router.back()"
+      @click="goBack"
       class="flex items-center text-gray-500 hover:text-gray-900 mb-8 font-medium transition-colors"
     >
-      <ChevronLeft class="w-5 h-5 mr-1" /> Back to Browse
+      <ChevronLeft class="w-5 h-5 mr-1" /> Back
     </button>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -383,14 +393,15 @@ useHead({
         </div>
       </Transition>
     </Teleport>
-  </div>
+    </div>
 
-  <!-- Not Found -->
-  <div v-else class="max-w-7xl mx-auto px-4 py-32 text-center">
-    <h2 class="text-3xl font-bold mb-4">Product not found</h2>
-    <NuxtLink to="/browse" class="text-primary-600 hover:underline">
-      Return to browse
-    </NuxtLink>
+    <!-- Not Found -->
+    <div v-else class="max-w-7xl mx-auto px-4 py-32 text-center">
+      <h2 class="text-3xl font-bold mb-4">Product not found</h2>
+      <NuxtLink to="/browse" class="text-primary-600 hover:underline">
+        Return to browse
+      </NuxtLink>
+    </div>
   </div>
 </template>
 

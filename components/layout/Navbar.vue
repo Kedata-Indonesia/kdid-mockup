@@ -43,26 +43,35 @@ const closeMenu = () => {
             <!-- Cart -->
             <NuxtLink to="/cart" class="relative text-gray-600 hover:text-primary-600">
               <ShoppingBag class="w-6 h-6" />
-              <span
-                v-if="cartStore.totalItems > 0"
-                class="absolute -top-2 -right-2 bg-primary-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center"
-              >
-                {{ cartStore.totalItems }}
-              </span>
+              <ClientOnly>
+                <span
+                  v-if="cartStore.totalItems > 0"
+                  class="absolute -top-2 -right-2 bg-primary-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center"
+                >
+                  {{ cartStore.totalItems }}
+                </span>
+              </ClientOnly>
             </NuxtLink>
 
             <!-- User -->
-            <NuxtLink
-              :to="authStore.isAuthenticated ? '/profile' : '/login'"
-              class="text-gray-600 hover:text-primary-600"
-            >
-              <div v-if="authStore.isAuthenticated" class="flex items-center space-x-2">
-                <div class="w-8 h-8 rounded-full bg-gold-200 flex items-center justify-center text-gold-700 font-bold text-sm">
-                  {{ authStore.userInitial }}
+            <ClientOnly>
+              <NuxtLink
+                :to="authStore.isAuthenticated ? '/profile' : '/login'"
+                class="text-gray-600 hover:text-primary-600"
+              >
+                <div v-if="authStore.isAuthenticated" class="flex items-center space-x-2">
+                  <div class="w-8 h-8 rounded-full bg-gold-200 flex items-center justify-center text-gold-700 font-bold text-sm">
+                    {{ authStore.userInitial }}
+                  </div>
                 </div>
-              </div>
-              <User v-else class="w-6 h-6" />
-            </NuxtLink>
+                <User v-else class="w-6 h-6" />
+              </NuxtLink>
+              <template #fallback>
+                <NuxtLink to="/login" class="text-gray-600 hover:text-primary-600">
+                  <User class="w-6 h-6" />
+                </NuxtLink>
+              </template>
+            </ClientOnly>
           </div>
         </div>
 
@@ -70,12 +79,14 @@ const closeMenu = () => {
         <div class="md:hidden flex items-center space-x-4">
           <NuxtLink to="/cart" class="relative text-gray-600">
             <ShoppingBag class="w-6 h-6" />
-            <span
-              v-if="cartStore.totalItems > 0"
-              class="absolute -top-2 -right-2 bg-primary-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center"
-            >
-              {{ cartStore.totalItems }}
-            </span>
+            <ClientOnly>
+              <span
+                v-if="cartStore.totalItems > 0"
+                class="absolute -top-2 -right-2 bg-primary-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center"
+              >
+                {{ cartStore.totalItems }}
+              </span>
+            </ClientOnly>
           </NuxtLink>
           <button @click="isMenuOpen = !isMenuOpen" class="text-gray-600">
             <X v-if="isMenuOpen" class="w-6 h-6" />
@@ -112,13 +123,20 @@ const closeMenu = () => {
         >
           How it Works
         </NuxtLink>
-        <NuxtLink
-          :to="authStore.isAuthenticated ? '/profile' : '/login'"
-          @click="closeMenu"
-          class="block text-lg font-medium py-2"
-        >
-          {{ authStore.isAuthenticated ? 'My Profile' : 'Login / Register' }}
-        </NuxtLink>
+        <ClientOnly>
+          <NuxtLink
+            :to="authStore.isAuthenticated ? '/profile' : '/login'"
+            @click="closeMenu"
+            class="block text-lg font-medium py-2"
+          >
+            {{ authStore.isAuthenticated ? 'My Profile' : 'Login / Register' }}
+          </NuxtLink>
+          <template #fallback>
+            <NuxtLink to="/login" @click="closeMenu" class="block text-lg font-medium py-2">
+              Login / Register
+            </NuxtLink>
+          </template>
+        </ClientOnly>
       </div>
     </Transition>
   </nav>
